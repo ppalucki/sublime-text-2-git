@@ -60,7 +60,7 @@ def _make_text_safeish(text, fallback_encoding):
     try:
         unitext = text.decode('utf-8')
     except UnicodeDecodeError:
-        unitext = text.decode(fallback_encoding)
+        unitext = text.decode(fallback_encoding, 'replace')
     return unitext
 
 
