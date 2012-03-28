@@ -745,6 +745,7 @@ class GitCustomCommand(GitTextCommand):
         self.run_command(command_splitted)
 
 
+
 class GitResetHeadCommand(GitTextCommand):
     def run(self, edit):
         self.run_command(['git', 'reset', 'HEAD', self.get_file_name()])
@@ -912,3 +913,16 @@ class GitCommitSelectedHunk(GitAddSelectedHunkCommand):
         self.run_command(['git', 'diff', '--no-color', self.get_file_name()], self.cull_diff)
         self.get_window().run_command('git_commit')
 
+        
+
+class GitGuiCommand(GitTextCommand):
+    def run(self, edit):
+        command = ['git', 'gui']
+        self.run_command(command)
+
+
+class GitGitkCommand(GitTextCommand):
+    def run(self, edit):
+        command = ['gitk']
+        self.run_command(command)
+            
