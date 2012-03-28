@@ -926,3 +926,13 @@ class GitGitkCommand(GitTextCommand):
         command = ['gitk']
         self.run_command(command)
             
+class GitGitgCommand(GitTextCommand):
+    def run(self, edit):
+        command = ['gitg']
+        self.run_command(command)
+
+
+class GitQgitCommand(GitTextCommand):
+    def run(self, edit):
+        command = ['qgit']
+        self.run_command(command)
