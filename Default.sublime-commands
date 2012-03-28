@@ -126,6 +126,14 @@
     ,{
         "caption": "Git: Gitk",
         "command": "git_gitk"
+    }    
+    ,{
+        "caption": "Git: qgit",
+        "command": "git_qgit"
+    }
+    ,{
+        "caption": "Git: gitg",
+        "command": "git_gitg"
 
     }
 ]
