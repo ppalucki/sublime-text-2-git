@@ -134,6 +134,11 @@
     ,{
         "caption": "Git: gitg",
         "command": "git_gitg"
-
     }
+    ,{
+        "caption": "Git: Commit all modified and Push",
+        "command": "git_commit_modified_and_push"
+    }
+
+
 ]

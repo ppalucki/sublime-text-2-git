@@ -176,7 +176,8 @@ class GitCommand:
         if not hasattr(self, 'output_view'):
             self.output_view = self.get_window().get_output_panel("git")
         self.output_view.set_read_only(False)
-        self._output_to_view(self.output_view, output, clear=True, **kwargs)
+        kwargs.setdefault('clear', True)
+        self._output_to_view(self.output_view, output, **kwargs)
         self.output_view.set_read_only(True)
         self.get_window().run_command("show_panel", {"panel": "output.git"})
 
@@ -936,3 +937,37 @@ class GitQgitCommand(GitTextCommand):
     def run(self, edit):
         command = ['qgit']
         self.run_command(command)
+
+
+class GitCommitModifiedAndPush(GitTextCommand):
+    may_change_files = True
+
+    def run(self, edit=None):
+        self.run_command(['git', 'diff', '--no-color'], self.diff_done, show_status=False)
+
+    def diff_done(self, result):
+        if not result.strip():
+            sublime.status_message("No changes")
+            #self.panel("No output")
+            return
+        #self.panel(result)
+        self.scratch(result, title="Git Diff")
+        self.get_window().show_input_panel("Message", "", self.on_input, None, None)
+
+    def on_input(self, message):
+        if message.strip() == "":
+            sublime.status_message("No commit message provided")
+            #self.panel("No commit message provided")
+            return
+        self.run_command(['git', 'commit', '-a', '-m', message], self.commit_done, show_status=False)
+        #self.run_command(['echo', 'commiting'], self.commit_done)
+
+    def commit_done(self, result):
+        self.panel(result, clear=True)
+        self.run_command(['git', 'push'], self.push_done, show_status=False)
+        #self.run_command(['echo', 'push'], self.push_done)
+
+
+    def push_done(self, result):
+        self.panel(result, clear=False)
+        self.get_window().run_command('close_file')
